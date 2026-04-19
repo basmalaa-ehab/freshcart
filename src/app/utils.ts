@@ -11,13 +11,17 @@ export async function decodeAuthenticatedUserToken(): Promise<string | null> {
     }
     
     // decode
-    const jwtRes = await decode({
-      secret: process.env.NEXTAUTH_SECRET! || "",
-      token: nextAuthToken,
-    });
-    if (jwtRes) {
-      return jwtRes.userToken as string;
-    } else {
+    try {
+      const jwtRes = await decode({
+        secret: process.env.NEXTAUTH_SECRET! || "",
+        token: nextAuthToken,
+      });
+      if (jwtRes?.userToken) {
+        return jwtRes.userToken as string;
+      }
+      return null;
+    } catch (decodeError) {
+      console.error("JWT decode error in decodeAuthenticatedUserToken:", decodeError);
       return null;
     }
   } catch (error) {
@@ -36,13 +40,17 @@ export async function getAuthenticatedUserId(): Promise<string | null> {
     }
     
     // decode
-    const jwtRes = await decode({
-      secret: process.env.NEXTAUTH_SECRET! || "",
-      token: nextAuthToken,
-    });
-    if (jwtRes) {
-      return jwtRes.id as string;
-    } else {
+    try {
+      const jwtRes = await decode({
+        secret: process.env.NEXTAUTH_SECRET! || "",
+        token: nextAuthToken,
+      });
+      if (jwtRes?.id) {
+        return jwtRes.id as string;
+      }
+      return null;
+    } catch (decodeError) {
+      console.error("JWT decode error in getAuthenticatedUserId:", decodeError);
       return null;
     }
   } catch (error) {

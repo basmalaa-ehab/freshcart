@@ -91,19 +91,21 @@ export const nextAuthConfig: NextAuthOptions = {
     // session object is mutible => you can override it update delete property 
     session: function({ session, token }) {
       if (session.user) {
-        session.user.id = token.id
-        session.user.name = token.name    
-        session.user.token = token.userToken 
+        session.user.id = token.id as string
+        session.user.name = token.name as string
+        session.user.token = token.userToken as string
       }
       return session
     }
   },
 
   session: {
+    strategy: "jwt",
     maxAge: 60 * 60 * 24 * 3,
   },
   pages: {
     signIn: "/Login",
+    error: "/Login",
   },
   secret: process.env.NEXTAUTH_SECRET,
 };

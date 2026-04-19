@@ -68,18 +68,28 @@ export default function LoginForm() {
           "py-5! px-4! bg-white! border-none! text-green-600! text-lg! font-semibold! ",
       });
 
+      // Wait for session to be updated
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      try {
+        await update();
+      } catch (updateError) {
+        console.error("Error updating session:", updateError);
+      }
 
+      try {
+        const cartRes = await getCurrentLoggedInUserCart();
+        if (cartRes?.products) {
+          updateNumberOfCartItems(cartRes.products.length);
+        }
+      } catch (cartError) {
+        console.error("Error fetching cart:", cartError);
+      }
 
-      const cartRes = await getCurrentLoggedInUserCart();
-      updateNumberOfCartItems(cartRes?.products.length || 0);
-
-
-
-
-
-
-      router.push("/");
-      // router.refresh();
+      // Small delay before redirect to ensure session is set
+      setTimeout(() => {
+        router.push("/");
+      }, 200);
 
       // setTimeout(() => {
       // }, 1000);
