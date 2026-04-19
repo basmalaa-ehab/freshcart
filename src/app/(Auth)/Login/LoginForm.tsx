@@ -97,11 +97,11 @@ export default function LoginForm() {
       // }, 1000);
       } else {
         console.error("SignIn error:", res?.error);
-        toast.error(res?.error || "incorrect Password or email", {
+        toast.error(res?.error || "Login failed. Please check your credentials.", {
           position: `top-right`,
           richColors: true,
           className: "py-5! px-4! bg-white! border-none! ",
-          duration: 3000,
+          duration: 5000,
         });
       }
     } catch (error) {

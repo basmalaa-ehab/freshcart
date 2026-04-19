@@ -56,12 +56,13 @@ export const nextAuthConfig: NextAuthOptions = {
 
           if (!res.ok) {
             console.error("API returned error:", finalRes.message || "Unknown error");
-            return null;
+            // Throw error with message to be caught by next-auth
+            throw new Error(finalRes.message || "Authentication failed");
           }
 
           if (!finalRes.token || !finalRes.user) {
             console.error("Missing token or user in response");
-            return null;
+            throw new Error("Invalid response from server");
           }
 
           const { name, email } = finalRes.user;
