@@ -17,13 +17,16 @@ export async function AddProductToCart(id: string) {
         console.log("finalRes from add to cart", finalRes);
         return finalRes.numOfCartItems;
       } else {
+        console.error("Failed to add to cart:", res.status, res.statusText);
         return false;
       }
     } catch (error) {
-      console.log("error", error);
+      console.error("Error adding to cart:", error);
+      return false;
     }
   } else {
-    return new Error("session ended please login again");
+    console.error("No user token found for add to cart");
+    return false;
   }
 }
 

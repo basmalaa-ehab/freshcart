@@ -31,6 +31,11 @@ export default function AddToCartButton({
   async function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
 
+    if (session.status === "loading") {
+      // Wait for session to load
+      return;
+    }
+
     if (session.status !== "authenticated") {
       router.push("/Login");
       return;
@@ -41,7 +46,7 @@ export default function AddToCartButton({
     try {
       const newItemsCont = await AddProductToCart(id);
 
-      if (newItemsCont != false) {
+      if (newItemsCont !== false && newItemsCont !== null) {
         toast.success("Added to cart 🛒", {
           duration: 2500,
           position: "top-right",
@@ -57,15 +62,16 @@ export default function AddToCartButton({
           }, resetTime);
         }
       } else {
-        toast.error("Failed to add item", {
+        toast.error("Failed to add item to cart", {
           duration: 3000,
           position: "top-right",
           className:
             "bg-white border border-red-200 text-red-600 shadow-lg px-4 py-3 rounded-xl font-medium",
         });
       }
-    } catch {
-      toast.error("Failed to add item", {
+    } catch (error) {
+      console.error("Error in handleClick:", error);
+      toast.error("Failed to add item to cart", {
         duration: 3000,
         position: "top-right",
         className:
@@ -80,7 +86,7 @@ export default function AddToCartButton({
     <button
       type="button"
       onClick={handleClick}
-      disabled={loading}
+      disabled={loading || session.status === "loading"}
       className={className}
     >
       {loading ? (
