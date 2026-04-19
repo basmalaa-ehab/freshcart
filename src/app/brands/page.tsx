@@ -45,7 +45,7 @@ export default async function brands() {
 
       <div className="container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-4  lg:grid-cols-6   gap-6 py-8 px-4     mx-auto container ">
-          {allBrands?.map((brand) => (
+          {allBrands?.map((brand : BrandType) => (
             <BrandCard brand={brand} key={brand._id} />
           ))}
         </div>

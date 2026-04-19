@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🛒 FreshCart - E-commerce Web App
 
 A fully responsive and modern e-commerce web application built with Next.js, featuring seamless product browsing, cart and wishlist management, and secure user authentication. Designed with a focus on performance, scalability, and clean UI/UX.
@@ -33,3 +34,7 @@ Clone the project:
 
 ```bash
 git clone https://github.com/basmalaa-ehab/freshcart.git
+=======
+# freshcart
+A fully responsive and modern e-commerce web application built with Next.js, featuring seamless product browsing, cart and wishlist management, and secure user authentication. Designed with a focus on performance, scalability, and clean UI/UX.
+>>>>>>> 53ff56e73d71b09a5644836f4de7ad3822aff634
