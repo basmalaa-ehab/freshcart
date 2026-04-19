@@ -5,6 +5,9 @@ import AddProductFromWishListToCar from "../_components/AddProductFromWishListTo
 import EmptyWishlist from "./EmptyWishlist";
 import RemoveFromWishlistButton from "./RemoveFromWishlistButton";
 
+// Force dynamic rendering because we use cookies for authentication
+export const dynamic = 'force-dynamic';
+
 export default async function WishlistPage() {
   
 

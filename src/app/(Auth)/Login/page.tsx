@@ -20,9 +20,8 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { nextAuthConfig } from "_/next-auth/nextAuth.Config";
 
-
-
-
+// Force dynamic rendering because we use getServerSession
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: {

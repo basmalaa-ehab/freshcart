@@ -7,6 +7,10 @@ import EmptyCart from "./EmptyCart";
 import OrderSummaryCart from "./OrderSummaryCart";
 import RemoveProductButton from "./RemoveProductButton";
 import UpdateProductCountButton from "./UpdateProductCountButton";
+
+// Force dynamic rendering because we use cookies for authentication
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: {
     default: "Cart",

@@ -12,6 +12,9 @@ import WishlistProvider from "./_context/WishlistContext";
 import { getUserCart, getUserWishlist } from "_/api/services/route.services";
 import { cartResponse, WishlistResponse } from "_/api/services/types";
 
+// Force dynamic rendering because we use cookies for authentication
+export const dynamic = 'force-dynamic';
+
 const exo = Exo({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],

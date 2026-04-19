@@ -4,6 +4,10 @@ import OrderCard from "_/app/_components/OrderCard";
 import Link from "next/link";
 import { FaBagShopping } from "react-icons/fa6";
 import { PiBoxArrowDownFill } from "react-icons/pi";
+
+// Force dynamic rendering because we use cookies for authentication
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: {
     default: "All Orders",
