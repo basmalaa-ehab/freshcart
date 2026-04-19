@@ -14,16 +14,16 @@ export const metadata = {
   },
 };
 export default async function page() {
-
-
-  
   // 3shan el user mydkhols el registerpage lw mch authenticated 
+  try {
+    const res = await getServerSession(nextAuthConfig);
+    if(res){
+      redirect("/")
+    }
+  } catch (error) {
+    console.error("Error getting server session in Register:", error);
+  }
 
-const res = await getServerSession(nextAuthConfig);
-
-if(res){
-  redirect("/")
-}
   return (
     <div className="bg-white  py-8">
       <div className="container max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 p-4">

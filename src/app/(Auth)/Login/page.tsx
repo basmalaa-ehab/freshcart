@@ -31,16 +31,15 @@ export const metadata = {
 };
 
 export default async function page() {
-
-
-
   // 3shan el user mydkhols el loginpage lw mch authenticated 
-const res = await getServerSession(nextAuthConfig);
-
-if(res){
-  redirect("/")
-}
-
+  try {
+    const res = await getServerSession(nextAuthConfig);
+    if(res){
+      redirect("/")
+    }
+  } catch (error) {
+    console.error("Error getting server session in Login:", error);
+  }
 
   process.env.AUTH_SECRET
   return (

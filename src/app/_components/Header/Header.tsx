@@ -10,7 +10,12 @@ import { IoIosLogOut } from "react-icons/io";
 import LogOutButton from "../LogOutButton/LogOutButton";
 
 export default async function Header() {
-  const res = await getServerSession(nextAuthConfig);
+  let res = null;
+  try {
+    res = await getServerSession(nextAuthConfig);
+  } catch (error) {
+    console.error("Error getting server session in Header:", error);
+  }
 
   const userName = res?.user?.name;
   const isUserAuthenticated = !!userName;

@@ -10,7 +10,7 @@ import WrapperForSessionProvider from "./_components/WrapperForSessionProvider/W
 import CartContextProvider from "./_context/CartContext";
 import WishlistProvider from "./_context/WishlistContext";
 import { getUserCart, getUserWishlist } from "_/api/services/route.services";
-import { cartResponse } from "_/api/services/types";
+import { cartResponse, WishlistResponse } from "_/api/services/types";
 
 const exo = Exo({
   subsets: ["latin"],
@@ -39,11 +39,21 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // calling api cart
-  const res = await getUserCart();
-  const resFromWishlist = await getUserWishlist();
-  // (res as cartResponse).products
-  // const initialNumberOfCartItems = res?.numOfCartItems ?? 0;
+  // calling api cart with error handling
+  let res: cartResponse | undefined = undefined;
+  let resFromWishlist: WishlistResponse | undefined = undefined;
+
+  try {
+    res = await getUserCart();
+  } catch (error) {
+    console.error("Error fetching user cart:", error);
+  }
+
+  try {
+    resFromWishlist = await getUserWishlist();
+  } catch (error) {
+    console.error("Error fetching user wishlist:", error);
+  }
 
   return (
     <html lang="en">

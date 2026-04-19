@@ -10,14 +10,17 @@ export async function proxy(req :  NextRequest){
 // ما بيعملش أي تحقق من صحتها أو صلاحيتها.
 // أي حد ممكن يرسل أي قيمة في الـ cookie → لو بس أخدنا القيمة، مفيش حماية.
 
-
-const token = await getToken({req , secret : process.env.NEXTAUTH_SECRET}) // mch btsht8l 8er f mkanen 1-proxy=>req 2-route handlers 3shan bygeli feha req
-if(!!token){
-     
+try {
+  const token = await getToken({req , secret : process.env.NEXTAUTH_SECRET}) // mch btsht8l 8er f mkanen 1-proxy=>req 2-route handlers 3shan bygeli feha req
+  if(!!token){
     return NextResponse.next()
+  }
+  // function must return 
+  return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/Login`)
+} catch (error) {
+  console.error("Proxy error:", error);
+  return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/Login`)
 }
-    // function must return 
-    return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/Login`)
 }
 
 export const config ={
