@@ -99,7 +99,7 @@ export async function updateProductCount(productId: string , count : number ) {
       const res = await fetch(
         `https://ecommerce.routemisr.com/api/v2/cart/${productId}`,
         {
-          method: "PUT",
+          method: "PATCH",
           headers: { token: userToken ,  "content-type": "application/json"  },
          body: JSON.stringify({ count: count }),
 
@@ -108,16 +108,19 @@ export async function updateProductCount(productId: string , count : number ) {
 
       if (res.ok) {
         const finalRes = await res.json();
-        console.log("finalRes from delete item", finalRes);
+        console.log("finalRes from update count", finalRes);
         revalidatePath("/cart");
         return finalRes.numOfCartItems;
       } else {
+        console.error("Failed to update count:", res.status, res.statusText);
         return false;
       }
     } catch (error) {
-      console.log("error", error);
+      console.error("Error updating count:", error);
+      return false;
     }
   } else {
-    return new Error("session ended please login again");
+    console.error("No user token found for update count");
+    return false;
   }
 }
