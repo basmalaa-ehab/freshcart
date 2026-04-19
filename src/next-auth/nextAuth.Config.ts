@@ -134,8 +134,9 @@ return session
   pages: {
     signIn: "/Login",
   },
+  secret: process.env.NEXTAUTH_SECRET,
 };
-secret: process.env.NEXTAUTH_SECRET
+
 /*.env => to secure syntax variabls inside your app (API keys Secret keys Database URL Tokens)
 
  * .env.local 
