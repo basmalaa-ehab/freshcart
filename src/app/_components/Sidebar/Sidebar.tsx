@@ -70,7 +70,7 @@ const { numOfCartItems } = useCart();
             <div className="relative">
               <Input
                 type="text"
-                id="input-button-group"
+                id="sidebar-search-input"
                 className="w-full pt-3 pl-4 pb-3.25  py-5 pr-12 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white   focus:outline-none! focus:ring-2! focus:ring-green-500/20! focus:border-green-500!"
                 placeholder="Search products..."
               />

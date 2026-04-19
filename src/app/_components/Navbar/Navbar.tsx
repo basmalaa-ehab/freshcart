@@ -88,7 +88,7 @@ export default function Navbar() {
               <div className="relative w-full flex-1 ">
                 <Input
                   type="text"
-                  id="input-button-group"
+                  id="navbar-search-input"
                   className="w-full  py-5.5  bg-[#F9FAFB80]    rounded-[33554400px] border-[#E5E7EB]  placeholder:text-[#36415380] font-medium text-sm/[100%] px-4    focus:outline-none! focus:ring-2! focus:ring-green-500/20! focus:border-green-500!"
                   placeholder="Search for products, brands and more..."
                 />
