@@ -93,7 +93,9 @@ export async function clearAllItems() {
 
 // update product from count
 export async function updateProductCount(productId: string , count : number ) {
+  console.log("updateProductCount called", { productId, count });
   const userToken = await decodeAuthenticatedUserToken();
+  console.log("userToken:", userToken ? "found" : "not found");
   if (userToken) {
     try {
       const res = await fetch(
@@ -105,6 +107,7 @@ export async function updateProductCount(productId: string , count : number ) {
 
         },
       );
+      console.log("API response status:", res.status, res.statusText);
 
       if (res.ok) {
         const finalRes = await res.json();

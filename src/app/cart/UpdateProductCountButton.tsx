@@ -19,11 +19,16 @@ export default function UpdateProductCountButton({
   const router = useRouter();
 
   async function handleUpdateCount() {
+    console.log("UpdateProductCountButton clicked", { id, count, isIncrement });
     setLoading(true);
     try {
       const res = await updateProductCount(id, count);
+      console.log("updateProductCount result:", res);
       if (res !== false) {
+        console.log("Refreshing router...");
         router.refresh();
+      } else {
+        console.error("updateProductCount returned false");
       }
     } catch (error) {
       console.error("Error updating count:", error);
