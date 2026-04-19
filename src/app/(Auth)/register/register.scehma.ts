@@ -50,8 +50,7 @@ At least one special character.
     phone: zod
       .string()
       .nonempty("*Please enter your phone number")
-      .regex(/^01[1250][0-9]{8}$/, "*Only Egyptian phone numbers are allowed"),
-      
+.regex(/^(?:\+?02)[0-9]{9}$/, "*Only Egyptian phone numbers are allowed")      
       
       //  terms: zod.boolean().refine(val => val === true, {
       //   message: "*You must accept the terms and conditions",
