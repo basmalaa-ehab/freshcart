@@ -31,7 +31,6 @@ export default function ProductQuantityUpdate({
 
     try {
       await updateProductCount(id, newCount);
-      router.refresh();
     } catch {
       setCount((prev) => prev + 1);
     }

@@ -121,15 +121,18 @@ export default async function Cart() {
                             </button> */}
 
                             <UpdateProductCountButton
-                              id={item.product._id}
+                              id={item.product.id}
                               count={item.count - 1}
                             />
                             <span className="w-12 text-center font-bold text-gray-900">
                               {item.count}
                             </span>
+                            {/* <button className="h-8 w-8 rounded-lg bg-green-600 shadow-sm flex items-center justify-center text-white hover:bg-green-700 transition-all cursor-pointer">
+                              <GoPlus />
+                            </button> */}
 
                             <UpdateProductCountButton
-                              id={item.product._id}
+                              id={item.product.id}
                               count={item.count + 1}
                               isIncrement
                             />
