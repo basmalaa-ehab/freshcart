@@ -58,6 +58,8 @@ export default function LoginForm() {
     try {
       // call authorize
       const res = await signIn("credentials", { redirect: false, ...data });
+      
+      console.log("SignIn response:", res);
 
       if (res?.ok) {
       toast.success("Login successfull", {
@@ -94,13 +96,22 @@ export default function LoginForm() {
       // setTimeout(() => {
       // }, 1000);
       } else {
-        toast.error("incorrect Password or email", {
+        console.error("SignIn error:", res?.error);
+        toast.error(res?.error || "incorrect Password or email", {
           position: `top-right`,
           richColors: true,
           className: "py-5! px-4! bg-white! border-none! ",
           duration: 3000,
         });
       }
+    } catch (error) {
+      console.error("Sign in exception:", error);
+      toast.error("An error occurred during sign in", {
+        position: `top-right`,
+        richColors: true,
+        className: "py-5! px-4! bg-white! border-none! ",
+        duration: 3000,
+      });
     } finally {
       setIsLoading(false);
     }

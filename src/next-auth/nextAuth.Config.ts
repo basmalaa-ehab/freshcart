@@ -33,6 +33,11 @@ export const nextAuthConfig: NextAuthOptions = {
       },
       authorize: async function (credentials) {
         try {
+          if (!credentials?.email || !credentials?.password) {
+            console.error("Missing credentials");
+            return null;
+          }
+
           const res = await fetch(
             "https://ecommerce.routemisr.com/api/v1/auth/signin",
             {
@@ -41,28 +46,40 @@ export const nextAuthConfig: NextAuthOptions = {
               headers: { "content-type": "application/json" },
             },
           );
+          
           const finalRes = await res.json();
-          console.log("final res from authorize function", finalRes);
+          console.log("authorize function response:", {
+            status: res.status,
+            ok: res.ok,
+            data: finalRes
+          });
 
-          if (res.ok && finalRes.token && finalRes.user) {
-            const { name, email } = finalRes.user;
-            
-            try {
-              const data: { id: string } = jwtDecode(finalRes.token);
-              return {
-                name,
-                email,
-                id: data.id,
-                token: finalRes.token
-              };
-            } catch (jwtError) {
-              console.error("JWT decode error:", jwtError);
-              return null;
-            }
+          if (!res.ok) {
+            console.error("API returned error:", finalRes.message || "Unknown error");
+            return null;
           }
 
-          console.error("Auth failed:", finalRes);
-          return null;
+          if (!finalRes.token || !finalRes.user) {
+            console.error("Missing token or user in response");
+            return null;
+          }
+
+          const { name, email } = finalRes.user;
+          
+          try {
+            const decodedData: { id: string } = jwtDecode(finalRes.token);
+            console.log("Token decoded successfully:", decodedData);
+            
+            return {
+              name: name || email,
+              email,
+              id: decodedData.id,
+              token: finalRes.token
+            };
+          } catch (jwtError) {
+            console.error("JWT decode error:", jwtError);
+            return null;
+          }
         } catch (error) {
           console.error("Authorization error:", error);
           return null;
@@ -79,10 +96,14 @@ export const nextAuthConfig: NextAuthOptions = {
     jwt: function({ token, user }) {
       // param.token // is the default token (object) that next-auth generate 
       // param.user // is the authenticated user provided from authorize function
-      if(user){
-        token.id = user.id
-        token.name = user.name       
-        token.userToken = user.token
+      try {
+        if(user){
+          token.id = user.id
+          token.name = user.name       
+          token.userToken = user.token
+        }
+      } catch (error) {
+        console.error("Error in JWT callback:", error);
       }
       return token
     },
@@ -90,17 +111,24 @@ export const nextAuthConfig: NextAuthOptions = {
     // if the user authenticated or not => have seession or not => 3obara 3n object {provides some properties}
     // session object is mutible => you can override it update delete property 
     session: function({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string
-        session.user.name = token.name as string
-        session.user.token = token.userToken as string
+      try {
+        if (session.user && token) {
+          session.user.id = (token.id as string) || ""
+          session.user.name = (token.name as string) || session.user.name || ""
+          session.user.token = (token.userToken as string) || ""
+        }
+      } catch (error) {
+        console.error("Error in session callback:", error);
       }
       return session
     }
   },
 
   session: {
-    strategy: "jwt",
+    strategy: "jwt" as const,
+    maxAge: 60 * 60 * 24 * 3,
+  },
+  jwt: {
     maxAge: 60 * 60 * 24 * 3,
   },
   pages: {
